@@ -28,7 +28,7 @@ def main():
     training_path = args.training_path
     testing_path = args.testing_path
     if args.out_dir is None:
-        out_dir = osp.join('data', 'DRIVE')
+        out_dir = osp.join('../../data', 'DRIVE')
     else:
         out_dir = args.out_dir
 

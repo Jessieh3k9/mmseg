@@ -23,7 +23,7 @@ def main():
     args = parse_args()
     dataset_path = args.dataset_path
     if args.out_dir is None:
-        out_dir = osp.join('data', 'loveDA')
+        out_dir = osp.join('../../data', 'loveDA')
     else:
         out_dir = args.out_dir
 

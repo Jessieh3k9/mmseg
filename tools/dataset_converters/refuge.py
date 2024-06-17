@@ -68,7 +68,7 @@ def main():
 
     raw_data_root = args.raw_data_root
     if args.out_dir is None:
-        out_dir = osp.join('./data', 'REFUGE')
+        out_dir = osp.join('../../data', 'REFUGE')
 
     else:
         out_dir = args.out_dir

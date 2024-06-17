@@ -26,7 +26,7 @@ def main():
     args = parse_args()
     dataset_path = args.dataset_path
     if args.out_dir is None:
-        out_dir = osp.join('data', 'CHASE_DB1')
+        out_dir = osp.join('../../data', 'CHASE_DB1')
     else:
         out_dir = args.out_dir
 

@@ -1,11 +1,15 @@
 # Copyright (c) OpenMMLab. All rights reserved.
+from typing import List, Tuple
+
 import torch
 import torch.nn as nn
 from mmcv.cnn import ConvModule
+from torch import Tensor
 
 from mmseg.registry import MODELS
-from ..utils import resize
 from .decode_head import BaseDecodeHead
+from ..utils import resize
+from ...utils import ConfigType
 
 
 class PPM(nn.ModuleList):
@@ -35,7 +39,7 @@ class PPM(nn.ModuleList):
         for pool_scale in pool_scales:
             self.append(
                 nn.Sequential(
-                    nn.AdaptiveAvgPool2d(pool_scale),
+                    nn.AvgPool2d(pool_scale),
                     ConvModule(
                         self.in_channels,
                         self.channels,

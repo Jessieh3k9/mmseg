@@ -43,7 +43,7 @@ def main():
         args.diabetic_retinopathy_manualsegm_path
     ]
     if args.out_dir is None:
-        out_dir = osp.join('data', 'HRF')
+        out_dir = osp.join('../../data', 'HRF')
     else:
         out_dir = args.out_dir
 

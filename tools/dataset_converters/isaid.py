@@ -174,7 +174,7 @@ def main():
     overlap = args.overlap_area  # overlap area
 
     if args.out_dir is None:
-        out_dir = osp.join('data', 'iSAID')
+        out_dir = osp.join('../../data', 'iSAID')
     else:
         out_dir = args.out_dir
 

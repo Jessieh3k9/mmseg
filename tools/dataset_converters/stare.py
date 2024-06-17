@@ -38,7 +38,7 @@ def main():
     labels_ah = args.labels_ah
     labels_vk = args.labels_vk
     if args.out_dir is None:
-        out_dir = osp.join('data', 'STARE')
+        out_dir = osp.join('../../data', 'STARE')
     else:
         out_dir = args.out_dir
 
