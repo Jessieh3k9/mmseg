@@ -232,10 +232,10 @@ class FRNet(nn.Module):
             ch1 = ch2
 
         # out_k_size = 11
-        self.dict_module.add_module(f"final", nn.Sequential(
-            nn.Conv2d(ch1, ch_out * 4, out_k_size, padding=out_k_size // 2, bias=False),
-            nn.Sigmoid()
-        ))
+        # self.dict_module.add_module(f"final", nn.Sequential(
+        #     nn.Conv2d(ch1, ch_out * 4, out_k_size, padding=out_k_size // 2, bias=False),
+        #     nn.Sigmoid()
+        # ))
 
         self.ls_mid_ch = ls_mid_ch
 
@@ -245,15 +245,15 @@ class FRNet(nn.Module):
             conv = self.dict_module[f'conv{i}']
             x = conv(x)
 
-        x = self.dict_module['final'](x)
-        x = torch.max(x, dim=1, keepdim=True)[0]
+        # x = self.dict_module['final'](x)
+        # x = torch.max(x, dim=1, keepdim=True)[0]
 
         return x
 
 
 if __name__ == '__main__':
-    net = FRNet(1, 1)
-    x = torch.randn(1, 1, 32, 32)
+    net = FRNet(2, 4)
+    x = torch.randn(1, 2, 32, 32)
     # print(net(x))
     # print(net)
     # import torch
@@ -261,4 +261,4 @@ if __name__ == '__main__':
 
     # 使用 torchsummary 来查看模型的结构和层数
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(summary(net.to(device), input_size=( 1, 32, 32)))  # 输入尺寸根据你的模型输入要求来设置
+    print(summary(net.to(device), input_size=( 2, 32, 32)))  # 输入尺寸根据你的模型输入要求来设置

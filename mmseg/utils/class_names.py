@@ -510,7 +510,8 @@ dataset_aliases = {
     'hsidrive': [
         'hsidrive', 'HSIDrive', 'HSI-Drive', 'hsidrive20', 'HSIDrive20',
         'HSI-Drive20'
-    ]
+    ],
+    'octa_6m': ['octa6m'],
 }
 
 
@@ -546,3 +547,15 @@ def get_palette(dataset):
     else:
         raise TypeError(f'dataset must a str, but got {type(dataset)}')
     return labels
+
+
+def octa_6m_classes():
+    return [
+        'background', 'vessel'
+    ]
+
+
+def octa_6m_palette():
+    return [
+        [120, 120, 120], [6, 230, 230]
+    ]

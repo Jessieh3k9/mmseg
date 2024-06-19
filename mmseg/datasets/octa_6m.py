@@ -1,13 +1,24 @@
+import mmengine.fileio as fileio
+
 from mmseg.registry import DATASETS
 from .basesegdataset import BaseSegDataset
 
 
 @DATASETS.register_module()
-class ExampleDataset(BaseSegDataset):
+class OCTA6mDataest(BaseSegDataset):
+    METAINFO = dict(
+        classes=('background', 'vessel'),
+        palette=[[120, 120, 120], [6, 230, 230]])
 
-    # METAINFO = dict(
-    #     classes=('xxx', 'xxx', ...),
-    #     palette=[[x, x, x], [x, x, x], ...])
-
-    def __init__(self, arg1, arg2):
-        pass
+    def __init__(self,
+                 img_suffix='.bmp',  # 图片的后缀
+                 seg_map_suffix='.bmp',  # 分割图的后缀
+                 reduce_zero_label=False,
+                 **kwargs) -> None:
+        super().__init__(
+            img_suffix=img_suffix,
+            seg_map_suffix=seg_map_suffix,
+            reduce_zero_label=reduce_zero_label,
+            **kwargs)
+        assert fileio.exists(
+            self.data_prefix['img_path'], backend_args=self.backend_args)

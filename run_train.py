@@ -5,7 +5,7 @@ def run_train_script():
     # 定义命令和参数
     command = "python"
     script = "tools/train.py"
-    args = ["frnet_base.py"]
+    args = ["frnet.py"]
 
     # 构建完整的命令
     full_command = [command, script] + args
