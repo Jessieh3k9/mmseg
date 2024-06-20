@@ -3,7 +3,7 @@ data_root = 'data/OCTA_6m'
 img_scale = (400, 400)
 crop_size = (64, 64)
 train_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile',to_float32=True,color_type='unchanged'),
     dict(type='LoadAnnotations'),
     dict(
         type='RandomResize',
