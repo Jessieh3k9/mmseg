@@ -1,38 +1,39 @@
 dataset_type = 'OCTA6mDataest'
 data_root = 'data/OCTA_6m'
-img_scale = (400, 400)
-crop_size = (64, 64)
+
+
+# crop_size = (64, 64)
 train_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', to_float32=True, color_type='unchanged'),
     dict(type='LoadAnnotations'),
-    dict(
-        type='RandomResize',
-        scale=img_scale,
-        ratio_range=(0.5, 2.0),
-        keep_ratio=True),
-    dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
-    dict(type='RandomFlip', prob=0.5),
-    dict(type='PhotoMetricDistortion'),
+    # dict(
+    #     type='RandomResize',
+    #     scale=img_scale,
+    #     ratio_range=(0.5, 2.0),
+    #     keep_ratio=True),
+    # dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
+    # dict(type='RandomFlip', prob=0.5),
+    # dict(type='PhotoMetricDistortion'),
     dict(type='PackSegInputs')
 ]
 test_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', to_float32=True, color_type='unchanged'),
     # dict(type='Resize', scale=img_scale, keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
     dict(type='LoadAnnotations'),
     dict(type='PackSegInputs')
 ]
-img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
+# img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
 tta_pipeline = [
-    dict(type='LoadImageFromFile', backend_args=None),
+    dict(type='LoadImageFromFile', to_float32=True, color_type='unchanged'),
     dict(
         type='TestTimeAug',
         transforms=[
-            [
-                dict(type='Resize', scale_factor=r, keep_ratio=True)
-                for r in img_ratios
-            ],
+            # [
+            #     dict(type='Resize', scale_factor=r, keep_ratio=True)
+            #     for r in img_ratios
+            # ],
             [
                 dict(type='RandomFlip', prob=0., direction='horizontal'),
                 dict(type='RandomFlip', prob=1., direction='horizontal')
@@ -80,5 +81,5 @@ test_dataloader = dict(
             seg_map_path='annotations/test'),
         pipeline=test_pipeline))
 
-val_evaluator = dict(type='IoUMetric', iou_metrics=['mDice']) #增加‘mIoU’?
+val_evaluator = dict(type='IoUMetric', iou_metrics=['mDice','mIoU'])  # 增加‘mIoU’?
 test_evaluator = val_evaluator

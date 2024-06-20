@@ -8,7 +8,7 @@ from .basesegdataset import BaseSegDataset
 class OCTA6mDataest(BaseSegDataset):
     METAINFO = dict(
         classes=('background', 'vessel'),
-        palette=[[120, 120, 120], [6, 230, 230]])
+        palette=[[0, 0, 0], [255, 255, 255]])
 
     def __init__(self,
                  img_suffix='.bmp',  # 图片的后缀

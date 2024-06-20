@@ -251,7 +251,7 @@ class FRNet(nn.Module):
 
 
 if __name__ == '__main__':
-    net = FRNet(2, 4)
+    net = FRNet(1, 4)
     # print(net(x))
     # print(net)
     # import torch

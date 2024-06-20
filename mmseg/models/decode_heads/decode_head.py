@@ -3,6 +3,8 @@ import warnings
 from abc import ABCMeta, abstractmethod
 from typing import List, Tuple
 
+import matplotlib.pyplot as plt
+import seaborn as sns
 import torch
 import torch.nn as nn
 from mmengine.model import BaseModule
@@ -13,6 +15,31 @@ from mmseg.structures import build_pixel_sampler
 from mmseg.utils import ConfigType, SampleList
 from ..losses import accuracy
 from ..utils import resize
+
+
+def draw_tensor(tensor: Tensor):
+    # 将tensor转换为numpy数组，便于可视化
+    import torch
+    from PIL import Image
+    import matplotlib.pyplot as plt
+    # 如果tensor在MPS设备上，将其移动到CPU
+    tensor=tensor.squeeze()
+    if tensor.is_mps:
+        tensor = tensor.cpu()
+    # 归一化到0-255范围内
+    tensor = (tensor - tensor.min()) / (tensor.max() - tensor.min()) * 255
+
+    # 将tensor转换为uint8类型
+    tensor = tensor.byte()
+
+    # 将tensor转换为PIL Image
+    image = Image.fromarray(tensor.numpy(), mode='L')
+
+    # 显示图像
+    plt.imshow(image, cmap='gray')
+    plt.title('2D Tensor as Image')
+    plt.axis('off')
+    plt.show()
 
 
 class BaseDecodeHead(BaseModule, metaclass=ABCMeta):
@@ -321,6 +348,7 @@ class BaseDecodeHead(BaseModule, metaclass=ABCMeta):
             losses_decode = self.loss_decode
         for loss_decode in losses_decode:
             if loss_decode.loss_name not in loss:
+                # draw_tensor(seg_label)
                 loss[loss_decode.loss_name] = loss_decode(
                     seg_logits,
                     seg_label,

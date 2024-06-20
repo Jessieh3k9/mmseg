@@ -557,5 +557,5 @@ def octa_6m_classes():
 
 def octa_6m_palette():
     return [
-        [120, 120, 120], [6, 230, 230]
+        [0, 0, 0], [255, 255, 255]
     ]

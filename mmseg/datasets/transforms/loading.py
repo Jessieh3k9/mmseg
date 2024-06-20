@@ -6,6 +6,7 @@ from typing import Dict, Optional, Union
 import mmcv
 import mmengine.fileio as fileio
 import numpy as np
+import torch
 from mmcv.transforms import BaseTransform
 from mmcv.transforms import LoadAnnotations as MMCV_LoadAnnotations
 from mmcv.transforms import LoadImageFromFile
@@ -17,6 +18,29 @@ try:
     from osgeo import gdal
 except ImportError:
     gdal = None
+def draw_tensor(tensor:torch.Tensor):
+    # 将tensor转换为numpy数组，便于可视化
+    import torch
+    from PIL import Image
+    import matplotlib.pyplot as plt
+    # 如果tensor在MPS设备上，将其移动到CPU
+    tensor=tensor.squeeze()
+    if tensor.is_mps:
+        tensor = tensor.cpu()
+    # 归一化到0-255范围内
+    tensor = (tensor - tensor.min()) / (tensor.max() - tensor.min()) * 255
+
+    # 将tensor转换为uint8类型
+    tensor = tensor.byte()
+
+    # 将tensor转换为PIL Image
+    image = Image.fromarray(tensor.numpy(), mode='L')
+
+    # 显示图像
+    plt.imshow(image, cmap='gray')
+    plt.title('2D Tensor as Image')
+    plt.axis('off')
+    plt.show()
 
 
 @TRANSFORMS.register_module()
@@ -102,7 +126,6 @@ class LoadAnnotations(MMCV_LoadAnnotations):
         gt_semantic_seg = mmcv.imfrombytes(
             img_bytes, flag='unchanged',
             backend=self.imdecode_backend).squeeze().astype(np.uint8)
-
         # reduce zero_label
         if self.reduce_zero_label is None:
             self.reduce_zero_label = results['reduce_zero_label']
@@ -123,6 +146,8 @@ class LoadAnnotations(MMCV_LoadAnnotations):
             gt_semantic_seg_copy = gt_semantic_seg.copy()
             for old_id, new_id in results['label_map'].items():
                 gt_semantic_seg[gt_semantic_seg_copy == old_id] = new_id
+        # Normalize the segmentation map to [0, 1]
+        gt_semantic_seg = gt_semantic_seg / 255.0
         results['gt_seg_map'] = gt_semantic_seg
         results['seg_fields'].append('gt_seg_map')
 

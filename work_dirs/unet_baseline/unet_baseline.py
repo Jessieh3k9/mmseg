@@ -47,6 +47,7 @@ img_scale = (
     584,
     565,
 )
+launcher = 'none'
 load_from = None
 log_level = 'INFO'
 log_processor = dict(by_epoch=False)
@@ -326,12 +327,15 @@ val_evaluator = dict(
     iou_metrics=[
         'mDice',
     ], type='IoUMetric')
-vis_backends = [dict(type='LocalVisBackend'),
-                dict(type='TensorboardVisBackend'),
-                dict(type='WandbVisBackend')]
+vis_backends = [
+    dict(type='LocalVisBackend'),
+    dict(type='TensorboardVisBackend'),
+    dict(type='WandbVisBackend'),
+]
 visualizer = dict(
     name='visualizer',
     type='SegLocalVisualizer',
-    vis_backends=[dict(type='LocalVisBackend'),
-                dict(type='TensorboardVisBackend'),
-                dict(type='WandbVisBackend')])
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = './work_dirs/unet_baseline'
