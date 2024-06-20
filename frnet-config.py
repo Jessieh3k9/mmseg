@@ -4,7 +4,7 @@ _base_ = [
 ]
 
 norm_cfg = dict(type='LN', normalized_shape=[3])
-
+#
 crop_size = (64, 64)
 data_preprocessor = dict(
     bgr_to_rgb=True,
@@ -63,8 +63,8 @@ param_scheduler = [
         power=0.9,
         type='PolyLR'),
 ]
-# vis_backends = [dict(type='LocalVisBackend')] #不使用wandb记录
-vis_backends = [dict(type='LocalVisBackend'), dict(type='WandbVisBackend')]
+vis_backends = [dict(type='LocalVisBackend')] #不使用wandb记录
+# vis_backends = [dict(type='LocalVisBackend'), dict(type='WandbVisBackend')]
 visualizer = dict(
     type='SegLocalVisualizer', vis_backends=vis_backends, name='visualizer')
 # By default, models are trained on 8 GPUs with 2 images per GPU

@@ -4,6 +4,7 @@ from typing import List, Optional
 
 import torch.nn as nn
 import torch.nn.functional as F
+from matplotlib import pyplot as plt
 from mmengine.logging import print_log
 from torch import Tensor
 

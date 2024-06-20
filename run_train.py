@@ -4,8 +4,8 @@ import subprocess
 def run_train_script():
     # 定义命令和参数
     command = "python"
-    script = "tools/train.py"
-    args = ["frnet.py"]
+    script = "tools/misc/print_config.py"
+    args = ["frnet-config.py","--graph"]
 
     # 构建完整的命令
     full_command = [command, script] + args

@@ -223,7 +223,7 @@ class FRNet(nn.Module):
                 self.dict_module.add_module(f"conv{i}", cls_init_block(ch1, ch2, k_size=k_size))
             else:
                 if cls_conv_block == RecurrentConvNeXtBlock:
-                    module = RecurrentConvNeXtBlock(dim=ch1, layer_scale_init_value=1,drop_path=0.4)
+                    module = RecurrentConvNeXtBlock(dim=ch1, layer_scale_init_value=1, drop_path=0.4)
                 else:
                     module = cls_conv_block(ch1, ch2, k_size=k_size)
                 self.dict_module.add_module(f"conv{i}", module)
@@ -253,7 +253,6 @@ class FRNet(nn.Module):
 
 if __name__ == '__main__':
     net = FRNet(2, 4)
-    x = torch.randn(1, 2, 32, 32)
     # print(net(x))
     # print(net)
     # import torch
@@ -261,4 +260,4 @@ if __name__ == '__main__':
 
     # 使用 torchsummary 来查看模型的结构和层数
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(summary(net.to(device), input_size=( 2, 32, 32)))  # 输入尺寸根据你的模型输入要求来设置
+    print(summary(net.to(device), input_size=(2, 32, 32)))  # 输入尺寸根据你的模型输入要求来设置
