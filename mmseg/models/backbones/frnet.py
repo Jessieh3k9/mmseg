@@ -1,9 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from timm.models.layers import DropPath
-
 from mmseg.registry import MODELS
+from timm.models.layers import DropPath
 
 
 class ConvBlock(nn.Module):
@@ -31,14 +30,14 @@ class ResidualBlock(ConvBlock):
                                stride=1, padding=p, bias=False, dilation=dilation)
         self.bn2 = nn.BatchNorm2d(out_channels)
 
-        self.shortcut = nn.Sequential()
+        # self.shortcut = nn.Sequential()
         # 短连接方式
-        if stride != 1 or in_channels != out_channels * self.expansion:
-            self.shortcut = nn.Sequential(
-                nn.Conv2d(in_channels, out_channels * self.expansion, kernel_size=1,
-                          stride=stride, bias=False),
-                nn.BatchNorm2d(out_channels * self.expansion)
-            )
+        # if stride != 1 or in_channels != out_channels * self.expansion:
+        self.shortcut = nn.Sequential(
+            nn.Conv2d(in_channels, out_channels * self.expansion, kernel_size=1,
+                      stride=stride, bias=False),
+            nn.BatchNorm2d(out_channels * self.expansion)
+        )
 
     def forward(self, x):
         residual = self.shortcut(x)
